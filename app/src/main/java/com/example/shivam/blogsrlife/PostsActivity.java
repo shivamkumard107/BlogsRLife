@@ -92,7 +92,6 @@ public class PostsActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.post_menu, menu);
