@@ -26,6 +26,9 @@ public class PostsActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth firebaseAuth;
     //    TextView tvText;
 //    Button btLogOut;
+
+    // changes to verify github conotributions
+
     private RecyclerView mBlogList;
     private DatabaseReference mDatabase ;
     SwipeRefreshLayout mPostRefresh;
