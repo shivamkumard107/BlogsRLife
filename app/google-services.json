@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "927924835514",
+    "firebase_url": "https://blogsrlife-7c0c2.firebaseio.com",
+    "project_id": "blogsrlife-7c0c2",
+    "storage_bucket": "blogsrlife-7c0c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:927924835514:android:0aa3b321eff56adc",
+        "android_client_info": {
+          "package_name": "com.example.shivam.blogsrlife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "927924835514-rg8ibg8db4pp7vstihbvmrb0538uls06.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzPyoJ4wKxqWsMYeaGC67Q7gVPZCO4bTc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
