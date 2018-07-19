@@ -1,113 +1,156 @@
 package com.example.shivam.blogsrlife;
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.UriPermission;
 import android.net.Uri;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CreatePostActivity extends AppCompatActivity {
-    ImageButton ibPostImage;
-    EditText etPostTitle, etPostDesc;
 
-    Button btSubmit;
-    private Uri myImageUri = null;
-    private static final int GALLERY_CODE = 1;
-    private ProgressDialog myProgress;
+    private static final int PICK_IMAGE_REQUEST = 1;
 
-    private StorageReference mStorage ;
-    private DatabaseReference myPostDatabase;
-    private FirebaseUser myUser;
+    private ImageButton mButtonChooseImage;
+    private Button mButtonUpload;
+    private EditText mPostTitle;
+    private EditText mPostDesc ;
+    private ProgressDialog pd ;
+
+    private Uri mImageUri;
+
+    private StorageReference mStorageRef;
+    private DatabaseReference mDatabaseRef;
+
+    private StorageTask mUploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
-        myProgress = new ProgressDialog(this);
-        mStorage = FirebaseStorage.getInstance().getReference();
-        ibPostImage = findViewById(R.id.ib_post_image);
-        etPostTitle = findViewById(R.id.et_post_title);
-        etPostDesc = findViewById(R.id.et_post_desc);
-        btSubmit = findViewById(R.id.submitPost);
 
+        pd = new ProgressDialog(CreatePostActivity.this);
+        mButtonChooseImage = findViewById(R.id.ib_chooseImage); //
+        mButtonUpload = findViewById(R.id.submitPost); //
 
-        ibPostImage.setOnClickListener(new View.OnClickListener() {
+        mPostTitle = findViewById(R.id.etPostTitle); //
+        mPostDesc = findViewById(R.id.descriptionPost);//
+
+        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+
+        mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent getGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                getGalleryIntent.setType("image/*");
-                startActivityForResult(getGalleryIntent, GALLERY_CODE);
+                openFileChooser();
             }
         });
 
-        btSubmit.setOnClickListener(new View.OnClickListener() {
+        mButtonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                btSubmit.setVisibility(View.GONE);
-                startPosting();
-
+                if (mUploadTask != null && mUploadTask.isInProgress()) {
+                    Toast.makeText(CreatePostActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+                } else {
+                    pd.setMessage("Upload in progress");
+                    pd.show();
+                    uploadFile();
+                }
             }
         });
+
 
     }
 
-    private void startPosting() {
-        myProgress.setMessage("Posting to blog... please wait");
-        myProgress.show();
-        final String titleVal = etPostTitle.getText().toString().trim();
-        final String descVal = etPostDesc.getText().toString().trim();
-        if (!TextUtils.isEmpty(titleVal) && !TextUtils.isEmpty(descVal) && myImageUri!=null) {
-            final StorageReference filepath = mStorage.child("Blog_Images").child(myImageUri.getLastPathSegment());
-            filepath.putFile(myImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    DatabaseReference newPost = myPostDatabase.push();
-
-                    Map<String, String> dataToSave = new HashMap<>();
-                    dataToSave.put("title", titleVal);
-                    dataToSave.put("desc", descVal);
-                    dataToSave.put("image", downloadUrl.toString());
-                    dataToSave.put("timeId", String.valueOf(java.lang.System.currentTimeMillis()));
-                    dataToSave.put("userId", myUser.getUid());
-                    dataToSave.put("username", myUser.getEmail());
-                    newPost.setValue(dataToSave);
-                    myProgress.dismiss();
-                    startActivity(new Intent(CreatePostActivity.this, PostsActivity.class));
-                    finish();
-
-                }
-            });
-        }
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == GALLERY_CODE && resultCode == RESULT_OK) {
-            myImageUri = data.getData();
-            ibPostImage.setImageURI(myImageUri);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            mImageUri = data.getData();
 
+            Picasso.with(this).load(mImageUri).into(mButtonChooseImage);
+        }
+    }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
+    private void uploadFile() {
+        if (mImageUri != null) {
+            StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
+                    + "." + getFileExtension(mImageUri));
+
+            mUploadTask = fileReference.putFile(mImageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                }
+                            }, 500);
+
+                            UploadPost upload = new UploadPost(mPostTitle.getText().toString().trim(),
+                                    taskSnapshot.getDownloadUrl().toString(), mPostDesc.getText().toString().trim());
+                            String uploadId = mDatabaseRef.push().getKey();
+                            mDatabaseRef.child(uploadId).setValue(upload);
+                            pd.dismiss();
+                            Toast.makeText(CreatePostActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+                            finish();
+                            startActivity(new Intent(CreatePostActivity.this, PostsActivity.class));
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(CreatePostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
         }
     }
 }

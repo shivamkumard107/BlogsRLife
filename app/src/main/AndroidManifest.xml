@@ -14,17 +14,24 @@
         <activity
             android:name=".MainActivity"
             android:label="Sign Up">
+        </activity>
+        <activity
+            android:name=".LogInActivity"
+            android:label="Sign In" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PostsActivity" >
+        </activity>
+        <activity android:name=".CreatePostActivity" />
         <activity
-            android:name=".LogInActivity"
-            android:label="Sign In" />
-        <activity android:name=".PostsActivity" />
-        <activity android:name=".CreatePostActivity"></activity>
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings">
+
+        </activity>
     </application>
 
 </manifest>

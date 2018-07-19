@@ -1,0 +1,250 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="3dp"
+    android:layout_marginTop="3dp"
+    android:elevation="@dimen/cardview_default_elevation"
+    android:layout_margin="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--<de.hdodenhof.circleimageview.CircleImageView-->
+            <!--android:id="@+id/pImage"-->
+            <!--android:padding="5dp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:src="@drawable/demo_photo"-->
+            <!--android:layout_height="55dp" />-->
+
+            <!--<LinearLayout-->
+            <!--android:padding="5dp"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_weight=".75"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/pName"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Player name"-->
+            <!--android:textColor="#000"-->
+            <!--android:textSize="14sp"-->
+            <!--android:letterSpacing="0.05"-->
+            <!--android:textStyle="bold" />-->
+
+            <!--<LinearLayout-->
+            <!--android:weightSum="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/pCategory"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Cricketer"-->
+            <!--android:textColor="#767676"-->
+            <!--android:maxLines="1"-->
+            <!--android:textSize="12sp"/>-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/pDate"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:maxLines="1"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="12th Jul 2017"-->
+            <!--android:textSize="12sp"/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/postMenu"-->
+            <!--android:padding="5dp"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_marginEnd="5dp"-->
+            <!--app:srcCompat="@drawable/ic_more_horiz"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="5dp" />-->
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/postImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:maxHeight="400dp"
+                android:padding="5dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/postTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Post Title"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/postDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Post Description"
+                android:textColor="#000"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp">
+
+            <TextView
+                android:id="@+id/postLikes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="10"
+                android:textSize="14sp"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/likesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingLeft="5dp"
+                android:paddingStart="5dp"
+                android:text="likes"
+                android:textSize="14sp"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:text="-"
+                android:textSize="14sp"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/postComments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:textSize="14sp"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingStart="5dp"
+                android:text="comments"
+                android:textSize="14sp"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="1dp"
+            android:background="#aeaeae" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_postLike"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight=".33"
+                android:drawableLeft="@drawable/ic_like"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/ic_like"
+                android:gravity="start|center_vertical"
+                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
+                android:text="@string/title_post_like"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textColor="#696969"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_postComment"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight=".4"
+                android:drawableLeft="@drawable/ic_comment"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/ic_comment"
+                android:gravity="start"
+                android:paddingLeft="25dp"
+                android:paddingStart="25dp"
+                android:text="@string/title_post_comment"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textColor="#696969"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_postShare"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight=".33"
+                android:drawableLeft="@drawable/ic_share"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/ic_share"
+                android:gravity="start"
+                android:paddingLeft="30dp"
+                android:paddingStart="30dp"
+                android:text="@string/title_post_Share"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textColor="#696969"
+                android:textSize="12sp"
+                tools:ignore="RtlSymmetry" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

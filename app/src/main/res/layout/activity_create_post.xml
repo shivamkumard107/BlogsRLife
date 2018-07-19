@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.shivam.blogsrlife.CreatePostActivity">
+    tools:context=".CreatePostActivity">
 
     <ImageButton
-        android:id="@+id/ib_post_image"
+        android:id="@+id/ib_chooseImage"
         android:layout_width="wrap_content"
         android:layout_height="245dp"
         android:layout_marginBottom="8dp"
@@ -22,7 +22,7 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
-        android:id="@+id/et_post_title"
+        android:id="@+id/etPostTitle"
         android:padding="10dp"
         android:background="@drawable/input_outline"
         android:layout_width="0dp"
@@ -38,13 +38,13 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ib_post_image"
+        app:layout_constraintTop_toBottomOf="@+id/ib_chooseImage"
         app:layout_constraintVertical_bias="0.0"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
     <EditText
-        android:id="@+id/et_post_desc"
+        android:id="@+id/descriptionPost"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -60,31 +60,26 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_post_title"
+        app:layout_constraintTop_toBottomOf="@+id/etPostTitle"
         app:layout_constraintVertical_bias="0.029"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
-        <Button
-            android:id="@+id/submitPost"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:background="@color/colorAccent"
-            android:text="@string/submit_text"
-            android:textColor="@color/cardview_light_background"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintVertical_bias="0.884"
-            android:focusable="true"
-            android:clickable="true"/>
-
-
-
+    <Button
+        android:id="@+id/submitPost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/colorAccent"
+        android:text="@string/submit_text"
+        android:textColor="@color/cardview_light_background"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.884" />
 </android.support.constraint.ConstraintLayout>
