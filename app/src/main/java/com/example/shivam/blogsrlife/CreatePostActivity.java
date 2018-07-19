@@ -22,9 +22,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -50,14 +54,22 @@ public class CreatePostActivity extends AppCompatActivity {
 
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
-
+    FirebaseUser firebaseUser ;
+    private FirebaseAuth firebaseAuth;
     private StorageTask mUploadTask;
 
+    private FirebaseAuth mauth ;
+    private FirebaseUser mCurrentUser ;
+private DatabaseReference mDatabaseUser ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
 
+        mauth = FirebaseAuth.getInstance();
+        mCurrentUser = mauth.getCurrentUser() ;
+
+        mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid())  ;
         pd = new ProgressDialog(CreatePostActivity.this);
         mButtonChooseImage = findViewById(R.id.ib_chooseImage); //
         mButtonUpload = findViewById(R.id.submitPost); //
@@ -65,8 +77,11 @@ public class CreatePostActivity extends AppCompatActivity {
         mPostTitle = findViewById(R.id.etPostTitle); //
         mPostDesc = findViewById(R.id.descriptionPost);//
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        firebaseUser = firebaseAuth.getCurrentUser() ;
 
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +139,7 @@ public class CreatePostActivity extends AppCompatActivity {
             mUploadTask = fileReference.putFile(mImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override
@@ -133,10 +148,11 @@ public class CreatePostActivity extends AppCompatActivity {
                                 }
                             }, 500);
 
-                            UploadPost upload = new UploadPost(mPostTitle.getText().toString().trim(),
-                                    taskSnapshot.getDownloadUrl().toString(), mPostDesc.getText().toString().trim());
-                            String uploadId = mDatabaseRef.push().getKey();
-                            mDatabaseRef.child(uploadId).setValue(upload);
+                                    UploadPost upload = new UploadPost(mPostTitle.getText().toString().trim(),
+                                            taskSnapshot.getDownloadUrl().toString(), mPostDesc.getText().toString().trim(),mCurrentUser.getUid(),firebaseUser.getDisplayName());
+                                    String uploadId = mDatabaseRef.push().getKey();
+                                    mDatabaseRef.child(uploadId).setValue(upload);
+
                             pd.dismiss();
                             Toast.makeText(CreatePostActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
                             finish();

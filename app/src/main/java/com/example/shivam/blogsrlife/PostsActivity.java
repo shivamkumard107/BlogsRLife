@@ -83,7 +83,9 @@ public class PostsActivity extends AppCompatActivity implements View.OnClickList
 
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setDesc(model.getmPostDesc());
+                viewHolder.setUserName(model.getUserPost());
                 viewHolder.setImage(getApplicationContext(), model.getImageUrl());
+
             }
         };
         mBlogList.setAdapter(firebaseRecyclerAdapter);

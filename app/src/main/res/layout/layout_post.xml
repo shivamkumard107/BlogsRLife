@@ -18,45 +18,38 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!--<de.hdodenhof.circleimageview.CircleImageView-->
-            <!--android:id="@+id/pImage"-->
-            <!--android:padding="5dp"-->
-            <!--android:layout_gravity="center_vertical"-->
-            <!--android:layout_width="50dp"-->
-            <!--android:src="@drawable/demo_photo"-->
-            <!--android:layout_height="55dp" />-->
+            <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/pImage"
+            android:padding="5dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="50dp"
+            android:src="@drawable/demo_photo"
+            android:layout_height="55dp" />
 
-            <!--<LinearLayout-->
-            <!--android:padding="5dp"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:orientation="vertical"-->
-            <!--android:layout_weight=".75"-->
-            <!--android:layout_height="wrap_content">-->
+            <LinearLayout
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_weight=".75"
+            android:layout_height="wrap_content">
 
-            <!--<TextView-->
-            <!--android:id="@+id/pName"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Player name"-->
-            <!--android:textColor="#000"-->
-            <!--android:textSize="14sp"-->
-            <!--android:letterSpacing="0.05"-->
-            <!--android:textStyle="bold" />-->
+            <TextView
+            android:id="@+id/pName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Anonymous"
+            android:textColor="#000"
+            android:textSize="14sp"
+            android:letterSpacing="0.05"
+            android:textStyle="bold" />
 
-            <!--<LinearLayout-->
-            <!--android:weightSum="1"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical">-->
+            <LinearLayout
+            android:weightSum="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <!--<TextView-->
-            <!--android:id="@+id/pCategory"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Cricketer"-->
-            <!--android:textColor="#767676"-->
-            <!--android:maxLines="1"-->
-            <!--android:textSize="12sp"/>-->
+
 
             <!--<TextView-->
             <!--android:id="@+id/pDate"-->
@@ -66,18 +59,18 @@
             <!--android:text="12th Jul 2017"-->
             <!--android:textSize="12sp"/>-->
 
-            <!--</LinearLayout>-->
+            </LinearLayout>
 
-            <!--</LinearLayout>-->
+            </LinearLayout>
 
-            <!--<ImageView-->
-            <!--android:id="@+id/postMenu"-->
-            <!--android:padding="5dp"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_marginEnd="5dp"-->
-            <!--app:srcCompat="@drawable/ic_more_horiz"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginRight="5dp" />-->
+            <ImageView
+            android:id="@+id/postMenu"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="5dp"
+            app:srcCompat="@drawable/ic_more_horiz"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp" />
 
         </LinearLayout>
 

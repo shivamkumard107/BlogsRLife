@@ -16,18 +16,30 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    EditText etEmail, etPassword ;
+    EditText etUserName ,etEmail, etPassword ;
     Button btRegister ;
     TextView tvSignIn ;
     ProgressBar pb ;
-    FirebaseAuth firebaseAuth ;
+    FirebaseAuth firebaseAuth;
+    private StorageReference mStorageRef;
+    private DatabaseReference mDatabaseRef;
+    FirebaseUser firebaseUser ;
+    private StorageTask mUploadUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        etUserName = findViewById(R.id.et_user_name);
         etEmail = findViewById(R.id.et_login_email);
         etPassword = findViewById(R.id.et_login_password);
         btRegister = findViewById(R.id.bt_register);
@@ -37,11 +49,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btRegister.setOnClickListener(this);
         tvSignIn.setOnClickListener(this);
 
+        mStorageRef = FirebaseStorage.getInstance().getReference("Users");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
+
         if (firebaseAuth.getCurrentUser() != null){
             //directly start profile
             finish();
             startActivity(new Intent(getApplicationContext(), PostsActivity.class));
         }
+        uploadUserData();
+    }
+
+    private void uploadUserData() {
+        UserData userData = new UserData(etUserName.getText().toString().trim());
+        String uploadId = mDatabaseRef.push().getKey();
+        mDatabaseRef.child(uploadId).setValue(userData) ;
     }
 
     @Override
@@ -50,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             pb.setVisibility(View.VISIBLE);
             btRegister.setVisibility(View.GONE);
             registerUser();
+
         }
         if (v== tvSignIn){
             // will open sign in activity
@@ -58,9 +81,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void registerUser() {
+        String username = etUserName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
+        if (TextUtils.isEmpty(username)){
+            etUserName.setError("Please enter your name");
+        }
         if (TextUtils.isEmpty(email)){
             etEmail.setError("Please Enter your Email");
             return;

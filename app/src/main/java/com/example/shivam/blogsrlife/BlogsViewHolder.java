@@ -26,6 +26,10 @@ class BlogsViewHolder extends RecyclerView.ViewHolder {
         TextView post_desc = (TextView) mView.findViewById(R.id.postDesc);
         post_desc.setText(desc);
     }
+    public void setUserName(String userName){
+        TextView username = (TextView)mView.findViewById(R.id.pName);
+        username.setText(userName);
+    }
     public void setImage(Context ctx, String image){
         ImageView post_image = (ImageView)mView.findViewById(R.id.postImage);
         post_image.setVisibility(View.VISIBLE);
