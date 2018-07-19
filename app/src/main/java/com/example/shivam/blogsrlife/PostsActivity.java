@@ -105,6 +105,8 @@ public class PostsActivity extends AppCompatActivity implements View.OnClickList
         }
         if (item.getItemId() == R.id.action_settings) {
             //open settings
+            Intent intent = new Intent(PostsActivity.this, SettingsActivity.class);
+            startActivity(intent);
         }
         if (item.getItemId() == R.id.action_signout) {
             firebaseAuth.signOut();
